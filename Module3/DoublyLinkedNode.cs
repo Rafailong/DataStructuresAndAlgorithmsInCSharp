@@ -1,6 +1,6 @@
 namespace Module3
 {
-    class DoublyLinkedNode<T>
+    public class DoublyLinkedNode<T>
     {
         public T Value { get; set; }
 
