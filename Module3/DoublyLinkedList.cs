@@ -50,18 +50,15 @@ namespace Module3 {
         #endregion
 
         public DoublyLinkedNode<T> Find(T t) {
-            if (this.Count <= 0) return null;
             var tmp = this.Head;
-            do
+            while (tmp != null)
             {
                 if (tmp.Value.Equals(t))
                 {
-                    return tmp;
+                    break;
                 }
-                else {
-                    tmp = tmp.Next;
-                }
-            } while (tmp != null);
+                tmp = tmp.Next;
+            }
             return tmp;
         }
 
