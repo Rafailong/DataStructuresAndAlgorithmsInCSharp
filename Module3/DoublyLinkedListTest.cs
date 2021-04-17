@@ -60,5 +60,18 @@ namespace Module3
             Assert.NotNull(found);
             Assert.AreEqual(5, found.Value);
         }
+
+        [Test]
+        public void Remove() {
+            var list = new DoublyLinkedList<int>();
+            Enumerable.Range(1, 10)
+                .ToList()
+                .ForEach(n => list.AddTail(n));
+            
+            Assert.IsTrue(list.Delete(1));
+            Assert.IsTrue(list.Delete(5));
+            Assert.IsTrue(list.Delete(10));
+            Assert.IsFalse(list.Delete(99));
+        }
     }
 }

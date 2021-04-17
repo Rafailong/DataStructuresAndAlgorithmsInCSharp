@@ -48,7 +48,6 @@ namespace Module3 {
             }
         }
         #endregion
-
         public DoublyLinkedNode<T> Find(T t) {
             var tmp = this.Head;
             while (tmp != null)
@@ -60,6 +59,48 @@ namespace Module3 {
                 tmp = tmp.Next;
             }
             return tmp;
+        }
+
+        public bool Delete(T t) {
+            var found = this.Find(t);
+
+            if (found == null) return false;
+
+            var prev = found.Prev;
+            var next = found.Next;
+            
+            // found was "in the middle"
+            if (prev != null && next != null) {
+                prev.Next = next;
+                next.Prev = prev;
+                return true;
+            }
+            // found was the only element
+            else if (prev == null && next == null)
+            {
+                this.Head = null;
+                this.Tail = null;
+                return true;
+            }
+            // found was Head
+            else if (prev == null && next != null)
+            {
+                next.Prev = null;
+                this.Head = next;
+                return true;
+            }
+            // found was tail
+            else if (prev != null && next == null)
+            {
+                prev.Next = null;
+                this.Tail = prev;
+                return true;
+            }
+            // we should not make it here!
+            else
+            {
+                return false;
+            }
         }
 
         #region ICollection
