@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 
 namespace Module3
@@ -46,6 +47,18 @@ namespace Module3
             Assert.AreEqual(3, _sut.Tail.Value);
             Assert.AreEqual(_sut.Head.Next.Next.Value, _sut.Tail.Value);
             Assert.AreEqual(3, _sut.Count);
+        }
+
+        [Test]
+        public void Find() {
+            var list = new DoublyLinkedList<int>();
+            Enumerable.Range(1, 10)
+                .ToList()
+                .ForEach(n => list.AddTail(n));
+            Assert.IsNull(list.Find(99));
+            var found = list.Find(5);
+            Assert.NotNull(found);
+            Assert.AreEqual(5, found.Value);
         }
     }
 }

@@ -49,6 +49,22 @@ namespace Module3 {
         }
         #endregion
 
+        public DoublyLinkedNode<T> Find(T t) {
+            if (this.Count <= 0) return null;
+            var tmp = this.Head;
+            do
+            {
+                if (tmp.Value.Equals(t))
+                {
+                    return tmp;
+                }
+                else {
+                    tmp = tmp.Next;
+                }
+            } while (tmp != null);
+            return tmp;
+        }
+
         #region ICollection
         public int Count { get; private set; }
 
