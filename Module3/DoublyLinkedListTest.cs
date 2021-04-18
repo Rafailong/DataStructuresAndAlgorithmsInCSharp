@@ -71,6 +71,7 @@ namespace Module3
             Assert.IsTrue(list.Delete(1));
             Assert.IsTrue(list.Delete(5));
             Assert.IsTrue(list.Delete(10));
+            Assert.AreEqual(list.Count, 7);
             Assert.IsFalse(list.Delete(99));
         }
     }

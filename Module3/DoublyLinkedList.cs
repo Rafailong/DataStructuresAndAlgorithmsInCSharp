@@ -73,6 +73,7 @@ namespace Module3 {
             if (prev != null && next != null) {
                 prev.Next = next;
                 next.Prev = prev;
+                this.Count--;
                 return true;
             }
             // found was the only element
@@ -80,6 +81,7 @@ namespace Module3 {
             {
                 this.Head = null;
                 this.Tail = null;
+                this.Count--;
                 return true;
             }
             // found was Head
@@ -87,6 +89,7 @@ namespace Module3 {
             {
                 next.Prev = null;
                 this.Head = next;
+                this.Count--;
                 return true;
             }
             // found was tail
@@ -94,6 +97,7 @@ namespace Module3 {
             {
                 prev.Next = null;
                 this.Tail = prev;
+                this.Count--;
                 return true;
             }
             // we should not make it here!
