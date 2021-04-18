@@ -48,6 +48,7 @@ namespace Module3 {
             }
         }
         #endregion
+
         public DoublyLinkedNode<T> Find(T t) {
             var tmp = this.Head;
             while (tmp != null)
@@ -107,24 +108,36 @@ namespace Module3 {
             }
         }
 
+        public IEnumerator<T> GetReverseEnumerator()
+        {
+            var tmp = this.Tail;
+            while (tmp != null)
+            {
+                yield return tmp.Value;
+                tmp = tmp.Prev;
+            }
+        }
+
         #region ICollection
         public int Count { get; private set; }
 
-        public bool IsReadOnly => throw new System.NotImplementedException();
+        public bool IsReadOnly => false;
 
         public void Add(T item)
         {
-            throw new System.NotImplementedException();
+            this.AddTail(item);
         }
 
         public void Clear()
         {
-            throw new System.NotImplementedException();
+            this.Head = null;
+            this.Tail = null;
+            this.Count = 0;
         }
 
         public bool Contains(T item)
         {
-            throw new System.NotImplementedException();
+            return this.Find(item) != null;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
@@ -134,17 +147,23 @@ namespace Module3 {
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            var tmp = this.Head;
+            while (tmp != null)
+            {
+                yield return tmp.Value;
+                tmp = tmp.Next;
+            }
         }
 
         public bool Remove(T item)
         {
-            throw new System.NotImplementedException();
+            return this.Delete(item);
         }
 
+        // Default behavior is: from Head to Tail
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            return this.GetEnumerator();
         }
         #endregion
     }
