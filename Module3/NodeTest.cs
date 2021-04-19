@@ -1,11 +1,12 @@
 using System;
-using Xunit;
+using NUnit.Framework;
 
 namespace Module3
 {
+    [TestFixture]
     public class NodeTest
     {
-        [Fact]
+        [Test]
         public void BuildLinkedList() {
             var n1 = new Node(1);
             var n2 = new Node(2, n1);

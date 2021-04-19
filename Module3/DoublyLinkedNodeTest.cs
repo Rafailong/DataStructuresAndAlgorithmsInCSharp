@@ -1,11 +1,12 @@
 using System;
-using Xunit;
+using NUnit.Framework;
 
 namespace Module3 {
 
+    [TestFixture]
     public class DoublyLinkedNodeTest {
 
-        [Fact]
+        [Test]
         public void BuildDoublyLinkedList() {
             var n1 = new DoublyLinkedNode<int>(1);
             var n2 = new DoublyLinkedNode<int>(2);

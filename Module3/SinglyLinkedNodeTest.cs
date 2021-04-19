@@ -1,11 +1,12 @@
 using System;
-using Xunit;
+using NUnit.Framework;
 
 namespace Module3 {
 
+    [TestFixture]
     public class SinglyLinkedNodeTest {
 
-        [Fact]
+        [Test]
         public void BuildSinglyLinkedList() {
             var list = new SinglyLinkedNode<int>(
                 1,

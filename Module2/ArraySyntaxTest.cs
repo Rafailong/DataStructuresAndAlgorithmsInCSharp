@@ -1,11 +1,12 @@
 using System;
-using Xunit;
+using NUnit.Framework;
 
 namespace Module2
 {
+    [TestFixture]
     public class UnitTest1
     {
-        [Fact]
+        [Test]
         public void FillAndPrintReadings()
         {
             var readings = ArraySyntax.FillReading(10);
