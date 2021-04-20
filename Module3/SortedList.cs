@@ -13,6 +13,19 @@ namespace Module3
 
         public bool IsReadOnly => false;
 
+        public DoublyLinkedNode<T> Find(T t) {
+            var tmp = this.head;
+            while (tmp != null)
+            {
+                if (tmp.Value.Equals(t))
+                {
+                    break;
+                }
+                tmp = tmp.Next;
+            }
+            return tmp;
+        }
+
         public void Add(T item)
         {
             var newNode = new DoublyLinkedNode<T>(item);
@@ -77,7 +90,7 @@ namespace Module3
 
         public bool Contains(T item)
         {
-            throw new System.NotImplementedException();
+            return this.Find(item) != null;
         }
 
         public void CopyTo(T[] array, int arrayIndex)
@@ -97,7 +110,49 @@ namespace Module3
 
         public bool Remove(T item)
         {
-            throw new System.NotImplementedException();
+            var found = this.Find(item);
+
+            if (found == null) return false;
+
+            var prev = found.Prev;
+            var next = found.Next;
+            
+            // found was "in the middle"
+            if (prev != null && next != null) {
+                prev.Next = next;
+                next.Prev = prev;
+                this.Count--;
+                return true;
+            }
+            // found was the only element
+            else if (prev == null && next == null)
+            {
+                this.head = null;
+                this.tail = null;
+                this.Count--;
+                return true;
+            }
+            // found was Head
+            else if (prev == null && next != null)
+            {
+                next.Prev = null;
+                this.head = next;
+                this.Count--;
+                return true;
+            }
+            // found was tail
+            else if (prev != null && next == null)
+            {
+                prev.Next = null;
+                this.tail = prev;
+                this.Count--;
+                return true;
+            }
+            // we should not make it here!
+            else
+            {
+                return false;
+            }
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
