@@ -1,6 +1,6 @@
 namespace Module3
 {
-    class SinglyLinkedNode<T>
+   public  class SinglyLinkedNode<T>
     {
         public T Value { get; set; }
 
