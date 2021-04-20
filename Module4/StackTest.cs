@@ -1,6 +1,8 @@
 namespace Module4
 {
+    using AutoFixture.NUnit3;
     using NUnit.Framework;
+    using System.Collections.Generic;
     using System.Linq;
 
     [TestFixture]
@@ -15,16 +17,18 @@ namespace Module4
             _sut = new Stack<int>();
         }
 
-        [Test]
-        public void PopAndPush()
+        [Test, AutoData]
+        public void PopAndPush(List<int> src)
         {
-            Enumerable.Range(1, 10).ToList().ForEach(i => _sut.Push(i));
-            Assert.AreEqual(10, _sut.Count);
-            for (int i = 10; i > 0; i--)
+            src.ForEach(i => _sut.Push(i));
+            Assert.AreEqual(src.Count, _sut.Count);
+            for (int i = src.Count; i > 0; i--)
             {
-                Assert.AreEqual(i, _sut.Pop().Value);
+                var expected = src.ElementAt(i-1);
+                Assert.AreEqual(expected, _sut.Pop().Value);
                 Assert.AreEqual(i-1, _sut.Count);
             }
+            Assert.AreEqual(0, _sut.Count);
         }
     }
 }
