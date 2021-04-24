@@ -101,5 +101,20 @@
 
             Assert.AreEqual("2345679", sb.ToString());
         }
+
+        [Test]
+        public void Post_Order_Traversal()
+        {
+            var tree = new BinarySearchTree<int>();
+            int[] src = { 5, 7, 9, 3, 6, 4, 2 };
+            src.ToList().ForEach(tree.Add);
+
+            var sb = new System.Text.StringBuilder();
+            Action<int> f = delegate (int i) { sb.Append(i.ToString()); };
+
+            tree.PostOrderTraversal(f);
+
+            Assert.AreEqual("2436975", sb.ToString());
+        }
     }
 }

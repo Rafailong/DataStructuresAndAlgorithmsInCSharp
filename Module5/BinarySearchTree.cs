@@ -90,5 +90,23 @@
                 InOrder(f, node.Right);
             }
         }
+
+        /**
+         * Left, then Right, and finally Node
+         */
+        public void PostOrderTraversal(Action<T> f)
+        {
+            PostOrder(f, this.Root);
+        }
+
+        private void PostOrder(Action<T> f, BinaryTreeNode<T> node)
+        {
+            if (node != null)
+            {
+                PostOrder(f, node.Left);
+                PostOrder(f, node.Right);
+                f(node.Value);
+            }
+        }
     }
 }
