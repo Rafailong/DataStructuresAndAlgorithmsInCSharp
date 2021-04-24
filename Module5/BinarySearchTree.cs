@@ -72,5 +72,23 @@
                 PreOrder(f, node.Right);
             }
         }
+
+        /**
+         * Left, then Node, and finally Right
+         */
+        public void InOrderTraversal(Action<T> f)
+        {
+            InOrder(f, this.Root);
+        }
+
+        private void InOrder(Action<T> f, BinaryTreeNode<T> node)
+        {
+            if (node != null)
+            {
+                InOrder(f, node.Left);
+                f(node.Value);
+                InOrder(f, node.Right);
+            }
+        }
     }
 }
