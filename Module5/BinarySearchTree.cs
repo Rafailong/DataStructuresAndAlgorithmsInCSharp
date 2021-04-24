@@ -54,5 +54,23 @@
 
             this.Count++;
         }
+
+        /**
+         * Root is visited before its children which are visited Left first then Right.
+         */
+        public void PreOrderTraversal(Action<T> f)
+        {
+            PreOrder(f, this.Root);
+        }
+
+        private void PreOrder(Action<T> f, BinaryTreeNode<T> node)
+        {
+            if (node != null)
+            {
+                f(node.Value);
+                PreOrder(f, node.Left);
+                PreOrder(f, node.Right);
+            }
+        }
     }
 }

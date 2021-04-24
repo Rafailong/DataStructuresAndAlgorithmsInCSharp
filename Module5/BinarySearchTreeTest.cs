@@ -71,5 +71,20 @@
             Assert.AreEqual(6, tree.Root.Right.Left.Value);
             Assert.AreEqual(9, tree.Root.Right.Right.Value);
         }
+
+        [Test]
+        public void Pre_Order_Traversal()
+        {
+            var tree = new BinarySearchTree<int>();
+            int[] src = { 5, 7, 9, 3, 6, 4, 2 };
+            src.ToList().ForEach(tree.Add);
+
+            var sb = new System.Text.StringBuilder();
+            Action<int> f = delegate (int i) { sb.Append(i.ToString()); };
+
+            tree.PreOrderTraversal(f);
+
+            Assert.AreEqual("5324769", sb.ToString());
+        }
     }
 }
