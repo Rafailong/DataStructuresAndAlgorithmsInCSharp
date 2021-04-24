@@ -116,5 +116,17 @@
 
             Assert.AreEqual("2436975", sb.ToString());
         }
+
+        [Test]
+        public void Search()
+        {
+            var tree = new BinarySearchTree<int>();
+            int[] src = { 5, 7, 9, 3, 6, 4, 2 };
+            src.ToList().ForEach(tree.Add);
+
+            Assert.IsNull(tree.Search(8));
+            Assert.IsNotNull(tree.Search(4));
+            Assert.IsNotNull(tree.Search(6));
+        }
     }
 }

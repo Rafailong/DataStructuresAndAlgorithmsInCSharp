@@ -108,5 +108,26 @@
                 f(node.Value);
             }
         }
+
+        public BinaryTreeNode<T> Search(T t)
+        {
+            if (this.Count <= 0) return null;
+
+            var tmp = this.Root;
+            do
+            {
+                if (t.CompareTo(tmp.Value) == 0) break;
+                if (t.CompareTo(tmp.Value) < 0)
+                {
+                    tmp = tmp.Left;
+                }
+                else
+                {
+                    tmp = tmp.Right;
+                }
+            } while (tmp != null);
+
+            return tmp;
+        }
     }
 }
