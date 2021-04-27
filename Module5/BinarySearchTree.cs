@@ -130,22 +130,21 @@
             return tmp;
         }
 
-        private readonly Func<BinaryTreeNode<T>, bool> IsLeaf =
-            n => n.Left == null && n.Right == null;
-
-        private readonly Func<BinaryTreeNode<T>, bool> HasOnlyLeftChild =
-            n => n.Right == null && n.Left != null;
-
-        private readonly Func<BinaryTreeNode<T>, bool> HasOnlyRightChild =
-            n => n.Left == null && n.Right != null;
-
         private BinaryTreeNode<T> LeftMostChild(BinaryTreeNode<T> node)
         {
             var tmp = node;
+            BinaryTreeNode<T> tmpParent = null;
             while (tmp != null && tmp.Left != null)
             {
+                tmpParent = tmp;
                 tmp = tmp.Left;
             }
+
+            if (tmpParent != null)
+            {
+                tmpParent.Left = null;
+            }
+
             return tmp;
         }
 
@@ -160,33 +159,54 @@
                 if (t.CompareTo(actual.Value) == 0)
                 {
                     // deleting root
-                    if (IsLeaf(actual) && parent == null) { this.Root = null; break; }
+                    if (actual.IsLeaf && parent == null) { this.Root = null; break; }
 
                     // deleting node with both both children
-                    /*if (actual.HasBothChildren)
+                    if (actual.HasBothChildren)
                     {
-                        var leftMostChild = LeftMostChild(actual.Right);
-                        if (parent != null && parent.HasLeft(actual.Value))
-                    }*/
+                        var successor = LeftMostChild(actual.Right);
+
+                        if (parent == null)
+                        {
+                            successor.Right = actual.Right;
+                            // if (this.Root.HasLeft(successor.Value)) { successor.Right = actual.Right; }
+
+                            successor.Left = actual.Left;
+                            // if (this.Root.HasRight(successor.Value)) { successor.Left = this.Root.Left;  }
+                            this.Root = successor;
+                            break;
+                        }
+                        else
+                        {
+                            if (actual.Right != null && actual.Right.Left != null)
+                            {
+                                successor.Right = actual.Right;
+                            }
+                            successor.Left = actual.Left;
+                            if (parent.HasLeft(actual.Value)) { parent.Left = successor; }
+                            if (parent.HasRight(actual.Value)) { parent.Right = successor; }
+                            break;
+                        }
+                    }
 
                     // from here, we assume that parent is not null
                     // deleting leaf
-                    if (IsLeaf(actual) && parent.HasLeft(t)) {
+                    if (actual.IsLeaf && parent.HasLeft(t)) {
                         parent.Left = null;
                         break; 
                     }
-                    if (IsLeaf(actual) && parent.HasRight(t)) {
+                    if (actual.IsLeaf && parent.HasRight(t)) {
                         parent.Right = null;
                         break;
                     }
 
                     // deleting node with only one child
-                    if (HasOnlyLeftChild(actual))
+                    if (actual.HasOnlyLeftChild)
                     {
                         parent.Left = actual.Left; 
                         break;
                     }
-                    if (HasOnlyRightChild(actual))
+                    if (actual.HasOnlyRightChild)
                     {
                         parent.Right = actual.Right;
                         break;

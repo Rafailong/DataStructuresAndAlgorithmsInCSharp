@@ -157,7 +157,7 @@
         public void Deleting_Node_With_Only_One_Child()
         {
             var tree = new BinarySearchTree<int>();
-            tree.Add(2); 
+            tree.Add(2);
             tree.Add(1); tree.Add(0); // left
             tree.Add(3); tree.Add(4); // right
 
@@ -173,6 +173,72 @@
             tree.Remove(3);
             tree.InOrderTraversal(f);
             Assert.AreEqual("024", sb.ToString());
+        }
+
+        [Test]
+        public void Deleting_Root_Node_With_Two_Children()
+        {
+            var tree = new BinarySearchTree<int>();
+            tree.Add(2);
+            tree.Add(1); tree.Add(3);
+
+            var sb = new System.Text.StringBuilder();
+            Action<int> f = delegate (int i) { sb.Append(i.ToString()); };
+
+            tree.Remove(2);
+            tree.InOrderTraversal(f);
+            Assert.AreEqual(3, tree.Root.Value);
+            Assert.AreEqual(1, tree.Root.Left.Value);
+            Assert.IsNull(tree.Root.Right);
+            Assert.AreEqual("13", sb.ToString());
+        }
+
+        [Test]
+        public void Deleting_Node_With_Two_Children()
+        {
+            var tree = new BinarySearchTree<int>();
+            //            10
+            //    5                15
+            // 3     8         13      18
+            //     7   9    11    14      19
+            //   6                           20
+            tree.Add(10);
+            tree.Add(5); tree.Add(15);
+            tree.Add(3); tree.Add(8); tree.Add(13); tree.Add(18);
+            tree.Add(7); tree.Add(9); tree.Add(11); tree.Add(14); tree.Add(19);
+            tree.Add(6); tree.Add(20);
+
+            var sb = new System.Text.StringBuilder();
+            Action<int> f = delegate (int i) { sb.Append(i.ToString()); };
+
+            tree.Remove(5);
+            //            10
+            //    6                15
+            // 3     8         13      18
+            //     7   9    11    14      19
+            //                               20
+            tree.InOrderTraversal(f);
+            Assert.AreEqual("367891011131415181920", sb.ToString());
+
+            sb.Clear();
+
+            tree.Remove(15);
+            //            10
+            //    6                18
+            // 3     8         13      19
+            //     7   9    11    14      20
+            tree.InOrderTraversal(f);
+            Assert.AreEqual("3678910111314181920", sb.ToString());
+
+            sb.Clear();
+
+            tree.Remove(10);
+            //            11
+            //    6                18
+            // 3     8         13      19
+            //     7   9          14      20
+            tree.InOrderTraversal(f);
+            Assert.AreEqual("36789111314181920", sb.ToString());
         }
     }
 }

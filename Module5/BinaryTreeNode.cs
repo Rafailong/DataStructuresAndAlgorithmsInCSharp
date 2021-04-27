@@ -16,6 +16,30 @@
             }
         }
 
+        public bool IsLeaf
+        {
+            get
+            {
+                return this.Left == null && this.Right == null;
+            }
+        }
+
+        public bool HasOnlyLeftChild
+        {
+            get
+            {
+                return this.Right == null && this.Left != null;
+            }
+        }
+
+        public bool HasOnlyRightChild
+        {
+            get
+            {
+                return this.Left == null && this.Right != null;
+            }
+        }
+
         public BinaryTreeNode(T v)
         {
             this.Value = v;
