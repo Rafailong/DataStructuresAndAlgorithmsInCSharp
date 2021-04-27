@@ -129,5 +129,75 @@
 
             return tmp;
         }
+
+        private readonly Func<BinaryTreeNode<T>, bool> IsLeaf =
+            n => n.Left == null && n.Right == null;
+
+        private readonly Func<BinaryTreeNode<T>, bool> HasOnlyLeftChild =
+            n => n.Right == null && n.Left != null;
+
+        private readonly Func<BinaryTreeNode<T>, bool> HasOnlyRightChild =
+            n => n.Left == null && n.Right != null;
+
+        private BinaryTreeNode<T> LeftMostChild(BinaryTreeNode<T> node)
+        {
+            var tmp = node;
+            while (tmp != null && tmp.Left != null)
+            {
+                tmp = tmp.Left;
+            }
+            return tmp;
+        }
+
+        public void Remove(T t)
+        {
+            if (this.Count <= 0) return;
+
+            var actual = this.Root;
+            BinaryTreeNode<T> parent = null;
+            do
+            {
+                if (t.CompareTo(actual.Value) == 0)
+                {
+                    // deleting root
+                    if (IsLeaf(actual) && parent == null) { this.Root = null; break; }
+
+                    // deleting node with both both children
+                    /*if (actual.HasBothChildren)
+                    {
+                        var leftMostChild = LeftMostChild(actual.Right);
+                        if (parent != null && parent.HasLeft(actual.Value))
+                    }*/
+
+                    // from here, we assume that parent is not null
+                    // deleting leaf
+                    if (IsLeaf(actual) && parent.HasLeft(t)) {
+                        parent.Left = null;
+                        break; 
+                    }
+                    if (IsLeaf(actual) && parent.HasRight(t)) {
+                        parent.Right = null;
+                        break;
+                    }
+
+                    // deleting node with only one child
+                    if (HasOnlyLeftChild(actual))
+                    {
+                        parent.Left = actual.Left; 
+                        break;
+                    }
+                    if (HasOnlyRightChild(actual))
+                    {
+                        parent.Right = actual.Right;
+                        break;
+                    }
+                }
+
+                parent = actual;
+                if (t.CompareTo(actual.Value) < 0) actual = actual.Left;
+                else actual = actual.Right;
+            } while (actual != null);
+            this.Count--;
+        }
     }
 }

@@ -128,5 +128,51 @@
             Assert.IsNotNull(tree.Search(4));
             Assert.IsNotNull(tree.Search(6));
         }
+
+        [Test]
+        public void Deleting_Leaf_Node_Root_Without_Children()
+        {
+            var tree = new BinarySearchTree<int>();
+            tree.Add(0);
+            Assert.AreEqual(1, tree.Count);
+            Assert.AreEqual(0, tree.Root.Value);
+            tree.Remove(0);
+            Assert.IsNull(tree.Root);
+            Assert.AreEqual(0, tree.Count);
+        }
+
+        [Test]
+        public void Deleting_Leaf_Node()
+        {
+            var tree = new BinarySearchTree<int>();
+            tree.Add(0); tree.Add(1);
+            Assert.AreEqual(2, tree.Count);
+            Assert.AreEqual(0, tree.Root.Value);
+            tree.Remove(1);
+            Assert.IsNull(tree.Search(1));
+            Assert.AreEqual(1, tree.Count);
+        }
+
+        [Test]
+        public void Deleting_Node_With_Only_One_Child()
+        {
+            var tree = new BinarySearchTree<int>();
+            tree.Add(2); 
+            tree.Add(1); tree.Add(0); // left
+            tree.Add(3); tree.Add(4); // right
+
+            var sb = new System.Text.StringBuilder();
+            Action<int> f = delegate (int i) { sb.Append(i.ToString()); };
+
+            tree.Remove(1);
+            tree.InOrderTraversal(f);
+            Assert.AreEqual("0234", sb.ToString());
+
+            sb.Clear();
+
+            tree.Remove(3);
+            tree.InOrderTraversal(f);
+            Assert.AreEqual("024", sb.ToString());
+        }
     }
 }
